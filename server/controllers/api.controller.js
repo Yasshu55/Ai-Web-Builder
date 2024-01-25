@@ -8,15 +8,29 @@ const genAI = new GoogleGenerativeAI('AIzaSyBkGV0U8BdNr94du8iBN9wnisFQa3m2qYc');
 
 async function ApiController(input) {
  try {
+   console.log("recieved input : "+input);
+
    const model = genAI.getGenerativeModel({ model: "gemini-pro"});
-   const prompt = "Give me HTMl code for " + input;
-   const cssPrompt = "Give me CSS code for " + prompt;
-   console.log("recieved input : "+prompt);
- 
-   const result = await model.generateContent(prompt);
-   const response = await result.response;
-   const text = response.text();
-   console.log(text);
+
+   
+   const prompt = "Give me only HTMl code and no CSS code in single <!DOCTYPE html> page linking to a css file with styles.css for this input - " + input;
+   const htmlResult = await model.generateContent(prompt);
+   const htmlResponse = await htmlResult.response;
+   const htmlText = htmlResponse.text();
+
+   
+   const cssPrompt = "Give me CSS code for " + htmlText;
+   const cssResult = await model.generateContent(cssPrompt);
+   const cssResponse = await cssResult.response;
+   const cssText = cssResponse.text();
+
+   console.log("HTML Text : ",htmlText);
+   console.log("CSS Text : ",cssText);
+
+   const text = {
+      htmlText,
+      cssText
+   }
    
    return text;
 

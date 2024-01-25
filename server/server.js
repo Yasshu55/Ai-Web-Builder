@@ -21,7 +21,7 @@ app.post("/api/generate", async (req,res) =>{
     console.log("My frontend input : ",input);
     const result = await ApiController(input);
     console.log(result);
-    res.json({htmlCode:result})
+    res.json({htmlCode:result.htmlText,cssCode:result.cssText})
     } catch (error) {
         console.log("Error at Generate APi: " + error);
         res.status(500).json({ error: "Internal Server Error" });
