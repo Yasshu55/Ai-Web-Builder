@@ -9,6 +9,7 @@ function GenerateCode() {
 
     const[htmlCode,setHtmlCode] = useState("");
     const[cssCode,setCssCode] = useState("");
+    
     const[isGenerated,setIsGenerated] = useState(false);
     const[inputData,setInputData] = useState("");
 

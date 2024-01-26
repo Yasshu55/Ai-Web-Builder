@@ -1,12 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+dotenv.config();
 const ApiController = require("./controllers/api.controller");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-dotenv.config();
 const PORT = 8000;
 
 
