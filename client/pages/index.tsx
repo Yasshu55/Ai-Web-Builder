@@ -2,17 +2,6 @@ import React, { useEffect, useState } from 'react'
 import GenerateCode from './app/components/generate-code'
 
 function index() {
-  // useEffect(() =>{
-  //   fetch('http://localhost:8000/api/home').then(
-  //     res => res.json()
-  //   ).then(
-  //     data =>{
-  //       console.log(data)
-  //       setMessage(data.message)
-  //     }
-  //   )
-  // },[])
-
   const [message, setMessage] = useState('Loading...')
   
   return (

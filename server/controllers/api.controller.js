@@ -12,6 +12,7 @@ if (!apiKey) {
 
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
+// this function generates the HTML,CSS and JS code for the given prompt
 async function ApiController(input) {
  try {
    console.log("recieved input : "+input);
@@ -19,27 +20,14 @@ async function ApiController(input) {
    const model = genAI.getGenerativeModel({ model: "gemini-pro"});
 
    
-   const prompt = "Write code. descriptive sections,  for the images add from https://source.unsplash.com/featured/?{$input} and images max size should fix to webpage size and should not exceed Give me only HTMl code and no CSS code in single <!DOCTYPE html> page linking to a css file with styles.css for this input and Wrap html code with ---starthtml--- ---endhtml--- " + input;
-   const htmlResult = await model.generateContent(prompt);
-   const htmlResponse = await htmlResult.response;
-   const htmlText = htmlResponse.text();
+   const prompt =  "Generate code with full functionality, descriptive sections, and good design. Use vibrant colors. For the images, add 'https://source.unsplash.com/featured/?{prompt here}' to the 'src' attribute. Provide HTML code without 'html', 'body', 'head', and 'script' tags. Wrap the HTML code with /---starthtml--- and ---endhtml---. Enclose the CSS code with /---startcss--- and ---endcss---. Include the JavaScript code between /---startjs--- and ---endjs---. Ensure the order is HTML first, followed by CSS, and then JavaScript. Output each code segment separately to allow extraction between the specified tags." + input
+   const result = await model.generateContent(prompt);
+   const response = await result.response;
+   const textCode = await response.text();
 
+   console.log("textCode : ",textCode);
    
-   const cssPrompt = "Write csscode  good design for every class and tag,vibrant colors, " + htmlText;
-   const cssResult = await model.generateContent(cssPrompt);
-   const cssResponse = await cssResult.response;
-   const cssText = cssResponse.text();
-
-   console.log("HTML Text : ",htmlText);
-   console.log("CSS Text : ",cssText);
-
-   const text = {
-      htmlText,
-      cssText
-   }
-   console.log("text : ",text);
-   
-   return text;
+   return textCode;
 
  } catch (error) {
   console.log("Error at Api controller - ",error);
