@@ -5,10 +5,10 @@ import Preview from './Preview'
 import {extractCode, updatePreview} from './utils/helper';
 import { Editor } from 'primereact/editor';
 
-        
-
+    
 function GenerateCode() {
     
+    // store the html,css,js code
     const[codes,setCodes] = useState({
         html: "",
         css: "",
@@ -19,26 +19,35 @@ function GenerateCode() {
     const[inputData,setInputData] = useState("");
     const[previewContent,setPreviewContent] = useState('');
 
-    const htmlHandler = (event: React.ChangeEvent<HTMLDivElement>) => {
-        setCodes((prev) =>({
+        const htmlHandler: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
+            setCodes((prev) => ({
             ...prev,
-            html: event.target.innerText
-        }))
-    }
-
-    const cssHandler = (event: React.ChangeEvent<HTMLDivElement>) => {
-        setCodes((prev) =>({
+            html: event.target.value,
+            }));
+            console.log("entered htmlHandler");
+            
+            updatePreview(codes)
+        };
+      
+        const cssHandler: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
+            setCodes((prev) => ({
             ...prev,
-            css: event.target.innerText // or event.target.textContent
-        }))
-    }
-
-    const jsHandler = (event: React.ChangeEvent<HTMLDivElement>) => {
-        setCodes((prev) =>({
-            ...prev,
-            js: event.target.innerText // or event.target.textContent
-        }))
-    }
+             css: event.target.value,
+            }));
+            
+            updatePreview(codes)
+        };
+      
+      const jsHandler: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
+        setCodes((prev) => ({
+          ...prev,
+          js: event.target.value,
+        }));
+        
+        updatePreview(codes)
+      };
+      
+      
  
 
     const generateCode = async () => {
@@ -155,29 +164,27 @@ function GenerateCode() {
             {isGenerated && 
                 <div>
                     <div>
-
                     <h1>Generated Code</h1>
                     <h2>HTML Code</h2>
-                     <textarea name="htmlCode" id="" cols={30} rows={10} value={codes.html}>{codes.html}</textarea> 
+                     <textarea onChange={htmlHandler}  name="htmlCode" id="" cols={30} rows={10} value={codes.html}>{codes.html}</textarea> 
                      {/* <Editor value={codes.html} 
                      onChange={htmlHandler}
                      style={{ height: '320px', }} 
                     /> */}
 
                     <h2>CSS Code</h2>
-                    <textarea name="cssCode" id="" cols={30} rows={10} value={codes.css}></textarea> 
+                    <textarea onChange={cssHandler} name="cssCode" id="" cols={30} rows={10} value={codes.css} ></textarea> 
                     {/* <Editor value={codes.css} 
                      onChange={cssHandler}
                      style={{ height: '320px' }} 
                     /> */}
 
                     <h2>JS Code</h2>
-                    <textarea name="jsCode" id="" cols={30} rows={10} value={codes.js}></textarea> 
+                    <textarea onChange={jsHandler} name="jsCode" id="" cols={30} rows={10} value={codes.js}></textarea> 
                     {/* <Editor value={codes.js} 
                      onChange={jsHandler}
                      style={{ height: '320px' }} 
                     /> */}
-                            
                     </div>
                         <div>
                         <Preview previewContent={previewContent}/>
