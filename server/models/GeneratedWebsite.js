@@ -5,6 +5,10 @@ const generatedWebsiteSchema = new mongoose.Schema({
         type:String,
         required: true,
     },
+    prompt:{
+        type: String,
+        required: true
+    },
     htmlCode:{
         type:String,
         required: true,

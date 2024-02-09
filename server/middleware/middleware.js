@@ -4,7 +4,7 @@ dotenv.config({ path: "../.env" });
 
 module.exports = function(req,res,next){
     try {
-        let token = req.header("x-token")
+        let token = req.header("Authorization").split(" ")[1];
         if(!token){
             return res.status(400).send("user not found!")
         }
@@ -12,7 +12,7 @@ module.exports = function(req,res,next){
         req.user = decode.user
         next();
     } catch (error) {
-        console.log(err);
+        console.log(error);
         return res.status(500).send("Internal error");
     }
 }

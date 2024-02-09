@@ -6,7 +6,7 @@ const ApiController = require("./controllers/api.controller");
 const GeneratedWebsite = require('./models/GeneratedWebsite')
 const User = require('./models/User');
 const jwt = require("jsonwebtoken");
-// const middleware = require('./middleware/middleware')
+const middleware = require('./middleware/middleware')
 
 const app = express();
 app.use(express.json());
@@ -31,25 +31,6 @@ app.post("/api/generate", async (req,res) =>{
     } catch (error) {
         console.log("Error at Generate APi: " + error);
         res.status(500).json({ error: "Internal Server Error" });
-    }
-})
-
-app.post('/api/save', async (req,res) =>{
-    try {
-    const{userId,htmlCode,cssCode,jsCode} = req.body;
-
-    const generatedWebCode = new GeneratedWebsite({
-        userId,
-        htmlCode,
-        cssCode,
-        jsCode,
-    });
-
-    const savedWebsite = await generatedWebCode.save();
-    res.json(({message: " Changes saved successfulyy!!",savedWebsite}))
-    } catch (error) {
-        console.log('Error saving changes: ',error);
-        res.status(500).json({error:"INternal SERVER ERROR"})
     }
 })
 
@@ -99,6 +80,43 @@ app.post('/api/login',async (req,res) =>{
     } catch (error) {
         res.status(500).json({ error: 'Login failed' });
     }
+})
+
+app.post('/api/save',middleware,async (req,res) =>{
+    try {
+    const {prompt,htmlCode,cssCode,jsCode} = req.body;
+    const userId = req.user.id;
+    
+        const generatedWebCode = new GeneratedWebsite({
+            userId,
+            prompt,
+            htmlCode,
+            cssCode,
+            jsCode,
+        });
+    
+        const savedWebsite = await generatedWebCode.save();
+        res.json(({message: "Changes saved successfulyy!!",savedWebsite}))
+    } catch (error) {
+        console.log('Error saving changes: ',error);
+        res.status(500).json({error:"INternal SERVER ERROR"})
+    }    
+})
+
+app.get('/api/myprofile',middleware,async (req,res) =>{
+   try {
+    const userId = req.user.id;
+    const user = await User.findById(userId)
+    console.log(user);
+    if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+    }
+    const userCodes = await GeneratedWebsite.find({userId})
+    res.json({userName: user.userName,userCodes: userCodes})
+   } catch (error) {
+    console.error('Error fetching user profile:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+   }
 })
 
 app.listen(PORT, () => {

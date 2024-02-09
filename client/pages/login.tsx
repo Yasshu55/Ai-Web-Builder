@@ -29,11 +29,12 @@ function login() {
             }
             const data = await res.json()
             console.log("Login data",data);
+            localStorage.setItem('token', data.token);
             setToken(data.token)
 
             if(data.token){
                 console.log("Entered");
-                router.push('/')
+                router.push('/generate')
             }
     
             

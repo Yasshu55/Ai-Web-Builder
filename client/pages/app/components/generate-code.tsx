@@ -46,6 +46,10 @@ function GenerateCode() {
         
         updatePreview(codes)
       };
+
+      const saveHandler = () =>{
+        
+      }
       
       
  
@@ -164,7 +168,8 @@ function GenerateCode() {
             {isGenerated && 
                 <div>
                     <div>
-                    <h1>Generated Code</h1>
+                    <h1>Generated Code</h1> 
+                    <button onClick={saveHandler}>Save Changes</button>
                     <h2>HTML Code</h2>
                      <textarea onChange={htmlHandler}  name="htmlCode" id="" cols={30} rows={10} value={codes.html}>{codes.html}</textarea> 
                      {/* <Editor value={codes.html} 
