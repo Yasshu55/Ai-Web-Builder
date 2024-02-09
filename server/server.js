@@ -85,7 +85,9 @@ app.post('/api/login',async (req,res) =>{
 app.post('/api/save',middleware,async (req,res) =>{
     try {
     const {prompt,htmlCode,cssCode,jsCode} = req.body;
+    console.log("ENtered /api/save api");
     const userId = req.user.id;
+    console.log("and useriD: ",userId);
     
         const generatedWebCode = new GeneratedWebsite({
             userId,
@@ -94,8 +96,10 @@ app.post('/api/save',middleware,async (req,res) =>{
             cssCode,
             jsCode,
         });
-    
+
+        
         const savedWebsite = await generatedWebCode.save();
+        console.log("saved website",savedWebsite);
         res.json(({message: "Changes saved successfulyy!!",savedWebsite}))
     } catch (error) {
         console.log('Error saving changes: ',error);

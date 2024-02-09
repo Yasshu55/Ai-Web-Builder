@@ -47,7 +47,32 @@ function GenerateCode() {
         updatePreview(codes)
       };
 
-      const saveHandler = () =>{
+      const saveHandler = async () =>{
+            try {
+                const res = await fetch("http://localhost:8000/api/save",{
+                    method:'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}` 
+                    },
+                    body: JSON.stringify({
+                        prompt: inputData,
+                        htmlCode:codes.html,
+                        cssCode:codes.css,
+                        jsCode:codes.js
+                    })
+                })
+        
+                if(!res.ok){
+                    throw new Error("Failes to save")
+                }
+        
+                const data = await res.json();
+                console.log(data);
+                alert("Saved successfully!")
+            } catch (error:any) {
+                console.log("Error at saving : ",error.message);
+            }
         
       }
       
