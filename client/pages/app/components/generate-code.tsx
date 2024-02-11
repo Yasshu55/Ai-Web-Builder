@@ -82,7 +82,8 @@ function GenerateCode() {
 
     const generateCode = async () => {
         setIsLoading(true);
-        const codeGenerateBackendUrl = "https://ai-web-builder.onrender.com/api/generate";
+        // const codeGenerateBackendUrl = "http://localhost:8000/api/generate";
+         const codeGenerateBackendUrl = "https://ai-web-builder.onrender.com/api/generate";
 
         try {
             const res = await fetch(codeGenerateBackendUrl,{
@@ -98,10 +99,15 @@ function GenerateCode() {
             if (!res.ok) {
                 throw new Error(`Something went wrong in code generation: ${res.status}`);
             }
+            
 
             const data = await res.json();
             console.log(data);
             console.log("data.textCode : ", data.textCode);
+
+            if (data && data.textCode == undefined) {
+                alert("Oops! Inncorrect prompt try different prompts or the type of the website you want! :)")
+            }
 
             // Extract HTML code
             const html = extractCode(data.textCode, '---starthtml---', '---endhtml---');

@@ -18,7 +18,7 @@ function Index() {
             </div>
             <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
               <button
-                onClick={() => router.push('/myprofile')}
+                onClick={() => router.push('/login')}
                 style={{ backgroundColor: '#1E40AF', color: 'white', padding: '0.5rem 1rem', borderRadius: '0.5rem', cursor: 'pointer', border: 'none' }}
               >
                 <Link href="/login" style={{ color: 'white' }}>
