@@ -107,6 +107,25 @@ app.post('/api/save',middleware,async (req,res) =>{
     }    
 })
 
+app.delete("/api/delete/:codeId",middleware, async (req,res) =>{
+    try {
+        const userId = req.user.id;
+        const codeId = req.params.codeId;
+
+        // check if code is berlongs to user
+        const code = await GeneratedWebsite.findOne({_id: codeId,userId:userId})
+        if(!code){
+            return res.status(404).json({ message: 'Code not found or unauthorized' });
+        }
+        await GeneratedWebsite.deleteOne({_id:codeId})
+        res.json({ message: 'Code deleted successfully' });
+
+    } catch (error) {
+        console.error('Error deleting code:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
+
 app.get('/api/myprofile',middleware,async (req,res) =>{
    try {
     const userId = req.user.id;

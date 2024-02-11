@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 interface UserCode {
+    _id: string,
     prompt: string;
     htmlCode: string;
     cssCode: string;
@@ -37,6 +38,25 @@ function MyProfile() {
             console.error('Error fetching user profile:', error.message);
         }
     }
+    
+    const deleteCode = async (codeId : any) =>{
+       try {
+        const res = await fetch(`http://localhost:8000/api/delete/${codeId}`,{
+            method : "DELETE",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+
+        if(!res.ok){
+            throw new Error("Failed to delete code")
+        }
+        fetchData();
+       } catch (error) {
+        console.error('Error deleting code:', error);
+       }
+    }
 
     const handleCodeClick = (code: UserCode) => {
         setSelectedCode(code);
@@ -48,12 +68,22 @@ function MyProfile() {
             <h1 className="text-3xl font-bold mb-4 text-purple-800">My Profile</h1>
             <h3 className="text-lg font-semibold mb-4 text-gray-700">Username: {userName}</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {userCodes.map((code, index) => (
-                    <div key={index} className="bg-purple-200 rounded-lg p-4 cursor-pointer hover:bg-purple-300 transition duration-300" onClick={() => handleCodeClick(code)}>
-                        <h4 className="text-lg font-semibold text-purple-800">{code.prompt}</h4>
-                    </div>
-                ))}
+    {userCodes.map((code, index) => (
+        <div key={index} className="relative">
+            <div className="bg-purple-200 rounded-lg p-4 cursor-pointer hover:bg-purple-300 transition duration-300" onClick={() => handleCodeClick(code)}>
+                <h4 className="text-lg font-semibold text-purple-800">{code.prompt}</h4>
             </div>
+            <button
+                onClick={() => deleteCode(code._id)}
+                className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-md text-sm"
+            >
+                Delete
+            </button>
+        </div>
+    ))}
+</div>
+
+            
             {selectedCode && isShown && (
                 <div className="mt-8">
                     <h2 className="text-2xl font-bold mb-4 text-green-800">Selected Code</h2>
