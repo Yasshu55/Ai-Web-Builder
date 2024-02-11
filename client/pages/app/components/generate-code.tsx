@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import Preview from './Preview'
-import {extractCode, updatePreview} from './utils/helper';
+import {extractCode, updatePreview} from '../../../utils/helper';
 import { Editor } from 'primereact/editor';
 
     

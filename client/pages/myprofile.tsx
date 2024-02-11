@@ -22,7 +22,7 @@ function MyProfile() {
           router.push('/login')
         }
         fetchData();
-    }, []);
+    }, [router]);
 
 
     const fetchData = async () => {
