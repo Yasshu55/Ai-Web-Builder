@@ -246,7 +246,7 @@ function GenerateCode() {
                 }
             </div>
             <div className="w-1/2">
-                <h1 className="text-2xl font-bold text-center mb-4">Preview</h1>
+                <h1 className="text-2xl font-bold text-center mb-4">Live Preview</h1>
                 <Preview previewContent={previewContent} />
             </div>
         </div>

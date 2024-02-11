@@ -44,7 +44,7 @@ function login() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-400 to-blue-500">
+        <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-green-400 to-blue-500">
             <div className="bg-white shadow-md rounded-md p-8">
                 <h2 className="text-3xl font-semibold text-center mb-6">Login</h2>
                 <form onSubmit={submitHandler}>
@@ -73,6 +73,9 @@ function login() {
                         Submit
                     </button>
                 </form>
+            </div>
+            <div className="mt-4">
+                <p className="text-white">No account? <button className="text-white underline" onClick={() => router.push('/signup')}>Sign up</button></p>
             </div>
         </div>
     );

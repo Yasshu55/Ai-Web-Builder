@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import GenerateCode from './app/components/generate-code'
 import { useRouter } from 'next/router'
 
 function generate() {
   const router = useRouter()
+  
+  useEffect(() =>{
+    const token = localStorage.getItem('token');
+    if(!token){
+      router.push('/login')
+    }
+  },[])
+
   return (
     <div>
        <nav style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', backgroundColor: '#F3F4F6', padding: '1rem' }}>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router'
 
 interface UserCode {
     _id: string,
@@ -9,14 +10,20 @@ interface UserCode {
 }
 
 function MyProfile() {
+    const router = useRouter()
     const [userName, setUserName] = useState<string>("");
     const [userCodes, setUserCodes] = useState<UserCode[]>([]);
     const [selectedCode, setSelectedCode] = useState<UserCode | null>(null);
     const [isShown,setIsShown] = useState(false);
 
     useEffect(() => {
+        const token = localStorage.getItem('token');
+        if(!token){
+          router.push('/login')
+        }
         fetchData();
     }, []);
+
 
     const fetchData = async () => {
         try {
