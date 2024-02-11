@@ -15,11 +15,6 @@ const PORT = process.env.PORT || 8000;
 require('./mongo/db')
 
 
-
-app.get("/api/home",(req,res) =>{
-    res.json({message:"Hello World"})
-})
-
 app.post("/api/generate", async (req,res) =>{
     try {
     const input = req.body.input;

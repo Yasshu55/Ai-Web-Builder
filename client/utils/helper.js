@@ -1,8 +1,14 @@
-const extractCode = (code,startTag,endTag) => {
-    const startIndex = code.indexOf(startTag) + startTag.length;
+const extractCode = (code, startTag, endTag) => {
+    const startIndex = code.indexOf(startTag);
     const endIndex = code.indexOf(endTag);
-    console.log("extractedcode: ", code.slice(startIndex, endIndex).trim());
-    return code.slice(startIndex, endIndex).trim();
+
+    if (startIndex === -1 || endIndex === -1) {
+        throw new Error(`Start or end tag not found: ${startTag}, ${endTag}`);
+    }
+
+    const extractedCode = code.slice(startIndex + startTag.length, endIndex).trim();
+    console.log("extracted code: ", extractedCode);
+    return extractedCode;
 };
 
 

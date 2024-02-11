@@ -17,7 +17,7 @@ const Signup = () => {
     const handleSubmit = async (e: any) =>{
         e.preventDefault();
         try {
-            const res = await fetch('http://localhost:8000/api/signup',{
+            const res = await fetch('https://ai-web-builder.onrender.com/api/signup',{
                 method:'POST',
                 headers: {
                     'Content-Type': 'application/json'

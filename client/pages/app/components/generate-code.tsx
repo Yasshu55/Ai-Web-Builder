@@ -51,7 +51,7 @@ function GenerateCode() {
       const saveHandler = async () =>{
 
             try {
-                const res = await fetch("http://localhost:8000/api/save",{
+                const res = await fetch("https://ai-web-builder.onrender.com/api/save",{
                     method:'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ function GenerateCode() {
 
     const generateCode = async () => {
         setIsLoading(true);
-        const codeGenerateBackendUrl = "http://localhost:8000/api/generate";
+        const codeGenerateBackendUrl = "https://ai-web-builder.onrender.com/api/generate";
 
         try {
             const res = await fetch(codeGenerateBackendUrl,{

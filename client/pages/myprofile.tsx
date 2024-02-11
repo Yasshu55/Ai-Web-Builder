@@ -27,7 +27,7 @@ function MyProfile() {
 
     const fetchData = async () => {
         try {
-            const res = await fetch('http://localhost:8000/api/myprofile', {
+            const res = await fetch('https://ai-web-builder.onrender.com/api/myprofile', {
                 method: "GET",
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -48,7 +48,7 @@ function MyProfile() {
     
     const deleteCode = async (codeId : any) =>{
        try {
-        const res = await fetch(`http://localhost:8000/api/delete/${codeId}`,{
+        const res = await fetch(`https://ai-web-builder.onrender.com/api/delete/${codeId}`,{
             method : "DELETE",
             headers: {
                 'Content-Type': 'application/json',

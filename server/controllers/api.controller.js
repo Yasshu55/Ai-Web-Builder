@@ -20,7 +20,7 @@ async function ApiController(input) {
    const model = genAI.getGenerativeModel({ model: "gemini-pro"});
 
    
-   const prompt =  "Generate code with full functionality, descriptive sections. Use vibrant colors. For the images, add 'https://source.unsplash.com/featured/?{prompt here}' to the 'src' attribute and fix the images accordingly. Provide HTML code without 'html', 'body', 'head', and 'script' tags. Wrap the HTML code with /---starthtml--- and ---endhtml---. Enclose the CSS code with /---startcss--- and ---endcss---. Include the JavaScript code between /---startjs--- and ---endjs---. Ensure the order is HTML first, followed by CSS, and then JavaScript. Output each code segment separately to allow extraction between the specified tags." + input
+   const prompt =  "Generate code with full functionality, descriptive sections, and good design. Use vibrant colors. For the images, add 'https://source.unsplash.com/featured/?{prompt here}' to the 'src' attribute. Provide HTML code without 'html', 'body', 'head', and 'script' tags. Wrap the HTML code with /---starthtml--- and ---endhtml---. Enclose the CSS code with /---startcss--- and ---endcss---. Include the JavaScript code between /---startjs--- and ---endjs---. Ensure the order is HTML first, followed by CSS, and then JavaScript. Output each code segment separately to allow extraction between the specified tags." + input
 
    const result = await model.generateContent(prompt);
    const response = await result.response;

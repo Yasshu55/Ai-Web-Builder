@@ -16,7 +16,7 @@ function Login() {
     const submitHandler = async (e:any) =>{
         e.preventDefault();
         try {
-            const res = await fetch('http://localhost:8000/api/login',{
+            const res = await fetch('https://ai-web-builder.onrender.com/api/login',{
                 method:'POST',
                 headers: {
                     'Content-Type': 'application/json'
