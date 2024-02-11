@@ -18,6 +18,7 @@ function GenerateCode() {
     const[isGenerated,setIsGenerated] = useState(false);
     const[inputData,setInputData] = useState("");
     const[previewContent,setPreviewContent] = useState('');
+    const[isLoading,setIsLoading] = useState(false);
 
         const htmlHandler: React.ChangeEventHandler<HTMLTextAreaElement> = (event) => {
             setCodes((prev) => ({
@@ -48,6 +49,7 @@ function GenerateCode() {
       };
 
       const saveHandler = async () =>{
+
             try {
                 const res = await fetch("http://localhost:8000/api/save",{
                     method:'POST',
@@ -73,13 +75,13 @@ function GenerateCode() {
             } catch (error:any) {
                 console.log("Error at saving : ",error.message);
             }
-        
       }
       
       
  
 
     const generateCode = async () => {
+        setIsLoading(true);
         const codeGenerateBackendUrl = "http://localhost:8000/api/generate";
 
         try {
@@ -120,6 +122,8 @@ function GenerateCode() {
             // }
         } catch (error) {
             console.log("Error fetching the data at code generation : ",error);
+        }  finally{
+            setIsLoading(false);
         }
     }
 
@@ -184,46 +188,71 @@ function GenerateCode() {
   
 
     return (
-        <div>
-            <h1>Generate Website</h1>
+        <div className="flex w-full">
+            <div className="w-1/2 p-6">
+                <h1 className="text-2xl font-bold mb-4">Input Prompt</h1>
+                <textarea
+                    name="input"
+                    value={inputData}
+                    cols={30}
+                    rows={5}
+                    placeholder="Enter your input prompt here..."
+                    className="w-full p-2 border border-gray-300 rounded mb-4"
+                    onChange={(e) => setInputData(e.target.value)}
+                ></textarea>
+                <button onClick={generateCode} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Generate</button>
 
-            <textarea name="input"  value={inputData} cols={30} rows={10} onChange = {(e) => setInputData(e.target.value)}></textarea>
-            <button onClick={generateCode}>Generate</button>
+                {isLoading && <p>Loading.....please wait for few seconds</p>}
 
-            {isGenerated && 
-                <div>
-                    <div>
-                    <h1>Generated Code</h1> 
-                    <button onClick={saveHandler}>Save Changes</button>
-                    <h2>HTML Code</h2>
-                     <textarea onChange={htmlHandler}  name="htmlCode" id="" cols={30} rows={10} value={codes.html}>{codes.html}</textarea> 
-                     {/* <Editor value={codes.html} 
-                     onChange={htmlHandler}
-                     style={{ height: '320px', }} 
-                    /> */}
+                {isGenerated &&
+                    <div className="mt-6">
+                        <h1 className="text-2xl font-bold mb-4">Generated Code</h1>
+                        <button onClick={saveHandler} className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Save Changes</button>
+                        <div className="mt-4">
+                            <h2 className="text-xl font-semibold mb-2">HTML Code</h2>
+                            <textarea
+                                onChange={htmlHandler}
+                                name="htmlCode"
+                                id=""
+                                cols={30}
+                                rows={10}
+                                value={codes.html}
+                                className="w-full p-2 border border-gray-300 rounded mb-4"
+                            ></textarea>
 
-                    <h2>CSS Code</h2>
-                    <textarea onChange={cssHandler} name="cssCode" id="" cols={30} rows={10} value={codes.css} ></textarea> 
-                    {/* <Editor value={codes.css} 
-                     onChange={cssHandler}
-                     style={{ height: '320px' }} 
-                    /> */}
+                            <h2 className="text-xl font-semibold mb-2">CSS Code</h2>
+                            <textarea
+                                onChange={cssHandler}
+                                name="cssCode"
+                                id=""
+                                cols={30}
+                                rows={10}
+                                value={codes.css}
+                                className="w-full p-2 border border-gray-300 rounded mb-4"
+                            ></textarea>
 
-                    <h2>JS Code</h2>
-                    <textarea onChange={jsHandler} name="jsCode" id="" cols={30} rows={10} value={codes.js}></textarea> 
-                    {/* <Editor value={codes.js} 
-                     onChange={jsHandler}
-                     style={{ height: '320px' }} 
-                    /> */}
-                    </div>
-                        <div>
-                        <Preview previewContent={previewContent}/>
+                            <h2 className="text-xl font-semibold mb-2">JS Code</h2>
+                            <textarea
+                                onChange={jsHandler}
+                                name="jsCode"
+                                id=""
+                                cols={30}
+                                rows={10}
+                                value={codes.js}
+                                className="w-full p-2 border border-gray-300 rounded mb-4"
+                            ></textarea>
                         </div>
-                </div>
-            }
+                    </div>
+                }
+            </div>
+            <div className="w-1/2">
+                <h1 className="text-2xl font-bold text-center mb-4">Preview</h1>
+                <Preview previewContent={previewContent} />
+            </div>
         </div>
     );
 }
+
 
 export default GenerateCode;
 

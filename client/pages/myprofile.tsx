@@ -44,50 +44,50 @@ function MyProfile() {
     };
 
     return (
-        <div>
-            <h1>My Profile</h1>
-            <h3>Username: {userName}</h3>
-            <div>
+        <div className="container mx-auto px-4 py-8">
+            <h1 className="text-3xl font-bold mb-4 text-purple-800">My Profile</h1>
+            <h3 className="text-lg font-semibold mb-4 text-gray-700">Username: {userName}</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {userCodes.map((code, index) => (
-                    <div key={index} className="code-card" onClick={() => handleCodeClick(code)}>
-                        <h4>{code.prompt}</h4>
+                    <div key={index} className="bg-purple-200 rounded-lg p-4 cursor-pointer hover:bg-purple-300 transition duration-300" onClick={() => handleCodeClick(code)}>
+                        <h4 className="text-lg font-semibold text-purple-800">{code.prompt}</h4>
                     </div>
                 ))}
             </div>
             {selectedCode && isShown && (
-                <div>
-                    <h2>Selected Code</h2>
-                    <div style={{ display: 'flex' }}>
-                        <div style={{ flex: 1 }}>
-                            <h3>HTML Code</h3>
+                <div className="mt-8">
+                    <h2 className="text-2xl font-bold mb-4 text-green-800">Selected Code</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <h3 className="text-lg font-semibold mb-2 text-green-800">HTML Code</h3>
                             <textarea
                                 value={selectedCode.htmlCode}
                                 rows={10}
-                                style={{ width: '100%', minHeight: '200px' }}
+                                className="w-full px-4 py-2 bg-green-100 rounded-lg"
                                 readOnly
                             ></textarea>
                         </div>
-                        <div style={{ flex: 1 }}>
-                            <h3>CSS Code</h3>
+                        <div>
+                            <h3 className="text-lg font-semibold mb-2 text-green-800">CSS Code</h3>
                             <textarea
                                 value={selectedCode.cssCode}
                                 rows={10}
-                                style={{ width: '100%', minHeight: '200px' }}
+                                className="w-full px-4 py-2 bg-green-100 rounded-lg"
                                 readOnly
                             ></textarea>
                         </div>
-                        <div style={{ flex: 1 }}>
-                            <h3>JS Code</h3>
+                        <div>
+                            <h3 className="text-lg font-semibold mb-2 text-green-800">JS Code</h3>
                             <textarea
                                 value={selectedCode.jsCode}
                                 rows={10}
-                                style={{ width: '100%', minHeight: '200px' }}
+                                className="w-full px-4 py-2 bg-green-100 rounded-lg"
                                 readOnly
                             ></textarea>
                         </div>
                     </div>
-                    <div>
-                        <h2>Live Preview</h2>
+                    <div className="mt-8">
+                        <h2 className="text-2xl font-bold mb-4 text-blue-800">Live Preview</h2>
                         <iframe
                             title="Preview"
                             srcDoc={`
@@ -101,7 +101,7 @@ function MyProfile() {
                                 </body>
                                 </html>
                             `}
-                            style={{ width: '100%', height: '500px', border: '1px solid #ccc' }}
+                            className="w-full h-96 border border-blue-300"
                         ></iframe>
                     </div>
                 </div>
@@ -109,5 +109,6 @@ function MyProfile() {
         </div>
     );
 }
+
 
 export default MyProfile;
